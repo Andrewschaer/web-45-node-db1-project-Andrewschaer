@@ -24,9 +24,16 @@ router.get('/:id', checkAccountId, (req, res) => {
     });
 });
 
-router.post('/', (req, res, next) => {
-  // DO YOUR MAGIC
-})
+router.post('/', checkAccountPayload, checkAccountNameUnique, (req, res, next) => {
+  Accounts.create (req.body.name.trim(), Number(req.body.budget))
+    .then(newAccount => {
+      res.status(201).json(newAccount);
+    })
+    .catch(err => {
+      console.log(err);
+      res.status(500).json({message: 'There was an error posting the new account data'});
+    });
+});
 
 router.put('/:id', (req, res, next) => {
   // DO YOUR MAGIC
