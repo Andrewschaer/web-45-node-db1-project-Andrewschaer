@@ -1,8 +1,17 @@
 const router = require('express').Router()
+// const { middlewareFns } = require('./accounts-middleware');
+const Accounts = require('./accounts-model');
 
 router.get('/', (req, res, next) => {
-  // DO YOUR MAGIC
-})
+  Accounts.getAll()
+    .then(allAccounts => {
+      res.status(200).json(allAccounts);
+    })
+    .catch(err => {
+      console.log(err);
+      res.status(500).json({message: 'There was an error retrieving all accounts data'});
+    });
+});
 
 router.get('/:id', (req, res, next) => {
   // DO YOUR MAGIC
