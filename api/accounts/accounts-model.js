@@ -21,11 +21,9 @@ const updateById = (id, name, budget ) => {
     });
 };
 
-const deleteById = id => {
-  return db('accounts')
-  .where('id', id)
-  .delete();
-};
+const deleteById = (id) => { 
+  return db('accounts').where('id', id).delete()
+}
 
 module.exports = {
   getAll,

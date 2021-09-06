@@ -46,12 +46,19 @@ router.put('/:id', checkAccountId, checkAccountPayload, checkAccountNameUnique, 
     });
 });
 
-router.delete('/:id', (req, res, next) => {
-  // DO YOUR MAGIC
-})
+router.delete('/:id', checkAccountId, (req, res, next) => {
+  Accounts.deleteById(req.params.id)
+    .then(() => {
+      res.status(200).json(req.account);
+    })
+    .catch(err => {
+      console.log(err);
+      res.status(500).json({message: 'There was an error deleting the account data'});
+    });
+});
 
-router.use((err, req, res, next) => { // eslint-disable-line
-  // DO YOUR MAGIC
-})
+// router.use((err, req, res, next) => { // eslint-disable-line
+//   // DO YOUR MAGIC
+// })
 
 module.exports = router;
