@@ -14,7 +14,7 @@ async function create (name, budget) {
   return newAccount
 }
 
-const updateById = (id, { name, budget }) => {
+const updateById = (id, name, budget ) => {
   return db('accounts').where('id', id).update({ name, budget})
     .then(() => {
       return getById(id);

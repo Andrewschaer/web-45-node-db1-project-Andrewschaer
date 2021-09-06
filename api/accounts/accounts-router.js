@@ -25,7 +25,7 @@ router.get('/:id', checkAccountId, (req, res) => {
 });
 
 router.post('/', checkAccountPayload, checkAccountNameUnique, (req, res, next) => {
-  Accounts.create (req.body.name.trim(), Number(req.body.budget))
+  Accounts.create(req.body.name.trim(), req.body.budget)
     .then(newAccount => {
       res.status(201).json(newAccount);
     })
@@ -35,8 +35,15 @@ router.post('/', checkAccountPayload, checkAccountNameUnique, (req, res, next) =
     });
 });
 
-router.put('/:id', (req, res, next) => {
-  // DO YOUR MAGIC
+router.put('/:id', checkAccountId, checkAccountPayload, checkAccountNameUnique, (req, res, next) => {
+  Accounts.updateById(req.params.id, req.body.name.trim(), req.body.budget)
+    .then(updatedAccount => {
+      res.status(200).json(updatedAccount);
+    })
+    .catch(err => {
+      console.log(err);
+      res.status(500).json({message: 'There was an error updating the account data'});
+    });
 });
 
 router.delete('/:id', (req, res, next) => {
